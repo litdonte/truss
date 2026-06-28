@@ -142,23 +142,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "rustmx"
-version = "0.1.0"
-dependencies = [
- "rustmx-macros",
- "ulid",
-]
-
-[[package]]
-name = "rustmx-macros"
-version = "0.1.0"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
-]
-
-[[package]]
 name = "rustversion"
 version = "1.0.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -179,6 +162,23 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
+]
+
+[[package]]
+name = "truss"
+version = "0.1.0"
+dependencies = [
+ "truss-macros",
+ "ulid",
+]
+
+[[package]]
+name = "truss-macros"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
 ]
 
 [[package]]

@@ -1,11 +1,11 @@
 pub mod core;
 
 pub mod prelude {
-    pub use crate::core::Id;
     pub use crate::core::component::Component;
     pub use crate::core::dom::Html;
     pub use crate::core::route::HttpMethod::*;
     pub use crate::core::route::Route;
+    pub use crate::core::Id;
 }
 
 #[cfg(test)]
@@ -13,7 +13,7 @@ mod tests {
     use crate::core::component::Component;
     use crate::core::dom::Html;
     use crate::core::query::IntoQueryParam;
-    use rustmx_macros::{component, query};
+    use truss_macros::{component, query};
 
     struct Scene {
         title: String,

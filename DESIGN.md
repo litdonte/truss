@@ -1,4 +1,4 @@
-# Rustmx Design Doc
+# Truss Design Doc
 
 ## Problem Statement
 
@@ -10,7 +10,7 @@ HTMX is a library that extends the functionality of HTML and simplifies the tech
 
 Some of these problems have been solved by existing tools. In the Rust ecosystem, `htmxology` and `axum-routing-htmx` aim to solve the route safety, but they're closely coupled with the Axum framework. They don't solve the swap target verification, error analysis, and debugging problems. The ecosystem could benefit from a crate that is framework agnostic and verifies routes, targets, and data at compile time.
 
-Rustmx aims to fill that gap — a framework agnostic Rust library that brings compile time verification to HTMX routes, swap targets, and component data.
+Truss aims to fill that gap — a framework agnostic Rust library that brings compile time verification to HTMX routes, swap targets, and component data.
 
 ## Goals
 
@@ -22,7 +22,7 @@ Rustmx aims to fill that gap — a framework agnostic Rust library that brings c
 
 ## Non-Goals
 
-- Rustmx is not a replacement for HTMX — it's a templating engine that generates type safe HTMX markup
+- Truss is not a replacement for HTMX — it's a templating engine that generates type safe HTMX markup
 - Not a full frontend framework — no client side state management
 - Not responsible for database safety, authentication, or security in transit
 
@@ -36,11 +36,11 @@ Several crates in the Rust ecosystem have attempted to improve the HTMX developm
 
 **`htmxology`** is the most complete existing solution — a full stack web framework for Rust that brings together HTMX and Axum. Routes are defined as Rust enums, eliminating typos and broken links. It provides compile time guarantees and first class HTMX support. However like `axum-routing-htmx`, it is tightly coupled to Axum and does not address swap target verification or provide a component driven architecture where components own their target ids.
 
-Rustmx builds on the ideas established by these crates while addressing their limitations, such as framework agnosticism, swap target verification, and a component model that makes invalid states structurally impossible.
+Truss builds on the ideas established by these crates while addressing their limitations, such as framework agnosticism, swap target verification, and a component model that makes invalid states structurally impossible.
 
 ## Core Concepts
 
-Rustmx is built around type driven development, such that, every key element of creating an HTMX template is a Rust type. At a high level:
+Truss is built around type driven development, such that, every key element of creating an HTMX template is a Rust type. At a high level:
 
 - **Component** - the central building block. It owns the data, the target identification, and render logic. Aside from the HTMX template the developer creates, the `#[component]` derive macro handles the rest.
 - **Route** — a typed enum with variants that generate HTMX attributes. Route definitions live exclusively in the `Route` enum and handlers reference variants directly via `#[handler]`, preventing drift.
@@ -53,7 +53,7 @@ Rustmx is built around type driven development, such that, every key element of 
 
 ## API Design
 
-The following example demonstrates the full Rustmx API. A `Route` enum defines
+The following example demonstrates the full Truss API. A `Route` enum defines
 all routes in one place. Components are defined with `#[component]` and implement
 `render()` to produce HTMX annotated HTML. Handlers reference route enum variants
 directly via `#[handler]`, pulling the route string from the enum definition and
@@ -182,8 +182,8 @@ The hardest piece — compile time route registration:
 
 2. How does element_impl! handle nesting — macros inside macros need careful design to avoid conflicts.
 
-3. Framework agnosticism — how does the handler integrate with different frameworks? Does Rustmx provide adapters or does the developer wire it up themselves?
+3. Framework agnosticism — how does the handler integrate with different frameworks? Does Truss provide adapters or does the developer wire it up themselves?
 
-4. How are HTMX response headers handled — things like HX-Redirect, HX-Trigger, HX-Refresh. Are these part of Rustmx or left to the developer?
+4. How are HTMX response headers handled — things like HX-Redirect, HX-Trigger, HX-Refresh. Are these part of Truss or left to the developer?
 
 5. What's the story for non-HTMX requests — if a user navigates directly to /scene/42 without HTMX, the handler still needs to return a full page, not just a fragment.

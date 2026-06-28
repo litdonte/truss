@@ -1,9 +1,9 @@
 [package]
-name = "rustmx"
+name = "truss"
 authors = ["Donte Littlejohn <litdonte03@gmail.com>"]
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-rustmx-macros = { path = "../rustmx-macros" }
+truss-macros = { path = "../truss-macros" }
 ulid = "1.2.1"
