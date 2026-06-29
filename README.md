@@ -82,7 +82,7 @@ impl ScenePanel {
         html! {
             div! {
                 button! {
-                    Get(Route::Scene(self.id).query(params))
+                    Route::Scene(self.id).query(params)
                     Target(self.overview)  // compile-time verified — not a CSS string
                     "Load Scene"
                 }
@@ -113,9 +113,9 @@ async fn get_scene(id: SceneId, db: Db) -> ScenePanel {
 | ----- | --------------------- | -------------- |
 | 1     | Core types and traits | ✅ Complete    |
 | 2     | Derive macros         | ✅ Complete    |
-| 3     | Handler macro         | 🔄 In progress |
-| 4     | Element macros        | 📋 Planned     |
-| 5     | Query parameters      | 📋 Planned     |
+| 3     | Element macros        | 🔄 In progress |
+| 4     | Query parameters      | 📋 Planned     |
+| 5     | Handler macro         | 📋 Planned     |
 | 6     | Polish and release    | 📋 Planned     |
 
 ## Workspace
