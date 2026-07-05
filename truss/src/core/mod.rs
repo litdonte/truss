@@ -1,5 +1,5 @@
 pub mod component;
-pub mod dom;
+pub mod html;
 pub mod query;
 pub mod route;
 

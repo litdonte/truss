@@ -3,7 +3,7 @@ pub mod core;
 pub mod prelude {
     pub use crate::core::Id;
     pub use crate::core::component::Component;
-    pub use crate::core::dom::Html;
+    pub use crate::core::html::Html;
     pub use crate::core::route::HttpMethod::*;
     pub use crate::core::route::RouteInfo;
 }
@@ -11,9 +11,9 @@ pub mod prelude {
 #[cfg(test)]
 #[allow(dead_code)]
 mod tests {
-    use crate::core::component::Component;
-    use crate::core::dom::Html;
+    use crate::core::html::Html;
     use crate::core::query::IntoQueryParam;
+    use crate::core::{component::Component, html::node::HtmlNode};
     use truss_macros::{component, query};
 
     struct Scene {
@@ -27,7 +27,7 @@ mod tests {
 
     impl ScenePanel {
         fn render(&self) -> Html {
-            Html::new(self.scene.title.clone())
+            Html::new(HtmlNode::Text(self.scene.title.clone()))
         }
     }
 

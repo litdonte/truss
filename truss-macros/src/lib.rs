@@ -43,8 +43,8 @@ pub fn component(_args: TokenStream, input: TokenStream) -> TokenStream {
             fn id(&self) -> &crate::core::Id<#struct_name> {
                 &self.instance_id
             }
-            fn render(&self) -> crate::core::dom::Html {
-                crate::core::dom::Html::new(String::new())
+            fn render(&self) -> crate::core::html::Html {
+                crate::core::html::Html::new(HtmlNode::Text(String::from(stringify!(#struct_name))))
             }
             fn with_id(mut self, id: &str) -> Self where Self:Sized {
                 self.instance_id = crate::core::Id::new_with(id);

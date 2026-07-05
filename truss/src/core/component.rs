@@ -1,4 +1,4 @@
-use crate::core::{Id, dom::Html};
+use crate::core::{Id, html::Html};
 
 pub trait Component {
     type Element;

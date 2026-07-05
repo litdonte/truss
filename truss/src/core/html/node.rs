@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use crate::core::dom::html::attribute::{HtmlAttribute, HtmxAttribute};
+use crate::core::html::attribute::{HtmlAttribute, HtmxAttribute};
 
 pub enum HtmlNode<'a> {
     Element {
