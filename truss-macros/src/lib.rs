@@ -51,6 +51,12 @@ pub fn component(_args: TokenStream, input: TokenStream) -> TokenStream {
                 self
             }
         }
+
+        impl crate::core::component::Targetable for #struct_name {
+            fn target_id(&self) -> &str {
+                self.instance_id.value()
+            }
+        }
     }
     .into()
 }

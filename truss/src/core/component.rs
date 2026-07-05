@@ -9,3 +9,7 @@ pub trait Component {
         Self: Sized;
     fn render(&self) -> Html;
 }
+
+pub trait Targetable {
+    fn target_id(&self) -> &str;
+}

@@ -1,3 +1,5 @@
+mod html;
+
 use std::fmt::Display;
 
 pub struct Html {
