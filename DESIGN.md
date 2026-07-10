@@ -45,7 +45,7 @@ Truss is built around type driven development, such that, every key element of c
 - **Component** - the central building block. It owns the data, the target identification, and render logic. Aside from the HTMX template the developer creates, the `#[component]` derive macro handles the rest.
 - **Route** — a typed enum with variants that generate HTMX attributes. Route definitions live exclusively in the `Route` enum and handlers reference variants directly via `#[handler]`, preventing drift.
 - **Query Parameters** - a typed enum via the `#[query]` derive macro with variants of valid parameters for a given route.
-- **Element Macros** - `html!`, `div!`, `button!`, etc. generate HTMX annotated HTML.
+- **Element Macros** - `fragment!`, `html!`, `div!`, `button!`, etc. generate HTMX annotated HTML. `fragment!` produces partial HTML responses for HTMX swaps. `html!` produces full page responses with the HTMX script embedded automatically.
 - **Swap Target Verification** - targets are referenced by components, not CSS selector strings. This prevents silent errors and missing targets trigger a compiler error.
 - **Component Trait** - the trait `#[component]` derives automatically. It defines `id()`, `with_id()`, and `render()`. Being a trait means any component can be passed as a swap target, enabling compile time target verification.
 - **IntoQueryParam Trait** - this is the trait `#[query]` derives. It converts enum variants into key/value pairs.
@@ -63,6 +63,7 @@ eliminating drift. Query parameters are typed through `#[query]` enums.
 type SceneId = Id<ScenePanel>;
 
 // Define your routes — single source of truth
+#[routes]
 pub enum Route {
     #[get("/scenes")]
     Scenes,
@@ -87,7 +88,7 @@ pub struct SceneOverview {
 
 impl SceneOverview {
     fn render(&self) -> Html {
-        html! {
+        fragment! {
             div! {
                 h1! { self.scene.title }
                 p! { self.scene.description }
@@ -107,11 +108,11 @@ impl ScenePanel {
     fn render(&self) -> Html {
         let params = &[SceneQuery::Character("Aerymis".into())];
 
-        html! {
+        fragment! {
             div! {
                 button! {
-                    Get(Route::Scene(self.id).query(params))
-                    Target(self.overview)
+                    HxGet(Route::Scene(self.id).query(params))
+                    HxTarget(self.overview)
                     "Load Scene"
                 }
 
@@ -121,21 +122,29 @@ impl ScenePanel {
     }
 }
 
-// Handler references the Route enum variant directly
-// Route string is pulled from Route::Scene — no drift possible
-#[handler(Route::Scene)]
-async fn get_scene(id: SceneId, db: Db) -> ScenePanel {
-    let scene = db.get_scene(id).await?;
-    ScenePanel {
-        id,
-        overview: SceneOverview { scene },
+// Full page response — HTMX script embedded automatically
+#[handler(Route::Home)]
+async fn home() -> Page {
+    html! {
+        head! { title! { "My App" } }
+        body! {
+            div! { "Welcome" }
+        }
     }
+}
+
+// Partial response — HTMX fragment
+#[handler(Route::Scene)]
+async fn get_scene(id: SceneId, db: Db) -> Html {
+    let scene = db.get_scene(id).await?;
+    let overview = SceneOverview::new(scene);
+    ScenePanel::new(id, overview).render()
 }
 ```
 
 ## Implementation Plan
 
-**Phase 1 — Core Types and Traits**
+**Phase 1 — Core Types and Traits** ✅
 Start with the foundation that everything else builds on. No macros yet, just the types and traits:
 
 - Component trait — id(), with_id(), render()
@@ -144,31 +153,37 @@ Start with the foundation that everything else builds on. No macros yet, just th
 - Html type — what render() returns
 - Route trait — what all route enums implement
 
-**Phase 2 — Derive Macros**
+**Phase 2 — Derive Macros** ✅
 Now automate what you proved works manually in Phase 1:
 
 - `#[component]` — derives Component trait
 - `#[query]` — derives IntoQueryParam trait
 - `#[get]`, `#[post]`, `#[put]`, `#[delete]`, `#[patch]` — route attributes on enum variants
 
-**Phase 3 — Handler Macro**
-The hardest piece — compile time route registration:
+**Phase 3 — Route Macro** ✅
 
-- `#[handler(Route::Scene)]` — reads route string from enum variant, registers handler
+- `#[routes]` — generates `impl RouteInfo` for route enums, preventing drift between route definitions and handler registrations
 
 **Phase 4 — Element Macros**
 
-- Core: `html!`, `div!`, `button!`, `a!`, `form!`, `input!`
+- Core: `fragment!`, `html!`, `div!`, `button!`, `a!`, `form!`, `input!`
+- `fragment!` — partial HTMX response wrapper, returns `Html`
+- `html!` — full page wrapper, returns `Page` with HTMX script embedded automatically
 - Via `element_impl!` delegation pattern
 - Element macros build nodes in an internal Html tree
-- `html!` traverses the tree depth first to produce the final HTML string
+- Traverses the tree depth first to produce the final HTML string
 
 **Phase 5 — Query Parameters**
 
 - `.query()` method on routes
 - `Query<T>` type
 
-**Phase 6 — Polish**
+**Phase 6 — Handler Macro**
+
+- `#[handler(Route::Scene)]` — reads route string from enum variant, registers handler
+- Framework adapters — Axum, Actix
+
+**Phase 7 — Polish**
 
 - Remaining element macros
 - Documentation
@@ -187,3 +202,5 @@ The hardest piece — compile time route registration:
 4. How are HTMX response headers handled — things like HX-Redirect, HX-Trigger, HX-Refresh. Are these part of Truss or left to the developer?
 
 5. What's the story for non-HTMX requests — if a user navigates directly to /scene/42 without HTMX, the handler still needs to return a full page, not just a fragment.
+
+6. How does `html!` determine which version of HTMX to embed — hardcoded CDN link, configurable version, or vendored?

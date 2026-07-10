@@ -26,7 +26,7 @@ mod tests {
     }
 
     impl ScenePanel {
-        fn render(&self) -> Html {
+        fn render(&self) -> Html<'_> {
             Html::new(HtmlNode::Text(self.scene.title.clone()))
         }
     }
