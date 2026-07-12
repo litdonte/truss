@@ -7,7 +7,7 @@ pub trait Component {
     fn with_id(self, id: &str) -> Self
     where
         Self: Sized;
-    fn render(&self) -> Html;
+    fn render(&self) -> Html<'_>;
 }
 
 pub trait Targetable {

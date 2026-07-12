@@ -10,6 +10,7 @@ pub enum HtmlNode<'a> {
         children: Vec<HtmlNode<'a>>,
     },
     Text(String),
+    Fragment(Vec<HtmlNode<'a>>),
 }
 
 impl Display for HtmlNode<'_> {
@@ -58,6 +59,24 @@ impl Display for HtmlNode<'_> {
                     tag
                 )
             }
+            Self::Fragment(elements) => {
+                for el in elements {
+                    write!(f, "{}", el)?;
+                }
+
+                Ok(())
+            }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use truss_macros::fragment;
+
+    #[test]
+    fn test_fragment_with_text() {
+        let result = fragment!("Hello World");
+        assert_eq!(result.to_string(), "Hello World");
     }
 }

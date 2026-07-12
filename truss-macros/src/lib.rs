@@ -1,6 +1,7 @@
 use proc_macro::TokenStream;
 
 mod component;
+mod element;
 mod helpers;
 mod query;
 mod routes;
@@ -18,4 +19,9 @@ pub fn query(_args: TokenStream, input: TokenStream) -> TokenStream {
 #[proc_macro_attribute]
 pub fn routes(_args: TokenStream, input: TokenStream) -> TokenStream {
     routes::expand(_args, input)
+}
+
+#[proc_macro]
+pub fn fragment(input: TokenStream) -> TokenStream {
+    element::expand_fragment(input)
 }
