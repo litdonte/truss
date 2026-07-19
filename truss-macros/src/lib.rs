@@ -114,3 +114,38 @@ pub fn h5(input: TokenStream) -> TokenStream {
 pub fn h6(input: TokenStream) -> TokenStream {
     element::expand_element("h6", input)
 }
+
+#[proc_macro]
+pub fn blockquote(input: TokenStream) -> TokenStream {
+    element::expand_element("blockquote", input)
+}
+
+#[proc_macro]
+pub fn pre(input: TokenStream) -> TokenStream {
+    element::expand_element("pre", input)
+}
+
+#[proc_macro]
+pub fn code(input: TokenStream) -> TokenStream {
+    element::expand_element("code", input)
+}
+
+#[proc_macro]
+pub fn strong(input: TokenStream) -> TokenStream {
+    element::expand_element("strong", input)
+}
+
+#[proc_macro]
+pub fn em(input: TokenStream) -> TokenStream {
+    element::expand_element("em", input)
+}
+
+#[proc_macro]
+pub fn br(input: TokenStream) -> TokenStream {
+    element::expand_element("br", input)
+}
+
+#[proc_macro]
+pub fn hr(input: TokenStream) -> TokenStream {
+    element::expand_element("hr", input)
+}
