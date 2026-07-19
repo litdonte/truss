@@ -149,3 +149,18 @@ pub fn br(input: TokenStream) -> TokenStream {
 pub fn hr(input: TokenStream) -> TokenStream {
     element::expand_element("hr", input)
 }
+
+#[proc_macro]
+pub fn ul(input: TokenStream) -> TokenStream {
+    element::expand_element("ul", input)
+}
+
+#[proc_macro]
+pub fn ol(input: TokenStream) -> TokenStream {
+    element::expand_element("ol", input)
+}
+
+#[proc_macro]
+pub fn li(input: TokenStream) -> TokenStream {
+    element::expand_element("li", input)
+}
