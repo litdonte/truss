@@ -213,3 +213,33 @@ pub fn video(input: TokenStream) -> TokenStream {
 pub fn audio(input: TokenStream) -> TokenStream {
     element::expand_element("audio", input)
 }
+
+#[proc_macro]
+pub fn table(input: TokenStream) -> TokenStream {
+    element::expand_element("table", input)
+}
+
+#[proc_macro]
+pub fn thead(input: TokenStream) -> TokenStream {
+    element::expand_element("thead", input)
+}
+
+#[proc_macro]
+pub fn tbody(input: TokenStream) -> TokenStream {
+    element::expand_element("tbody", input)
+}
+
+#[proc_macro]
+pub fn tr(input: TokenStream) -> TokenStream {
+    element::expand_element("tr", input)
+}
+
+#[proc_macro]
+pub fn th(input: TokenStream) -> TokenStream {
+    element::expand_element("th", input)
+}
+
+#[proc_macro]
+pub fn td(input: TokenStream) -> TokenStream {
+    element::expand_element("td", input)
+}
