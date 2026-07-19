@@ -44,3 +44,18 @@ pub fn span(input: TokenStream) -> TokenStream {
 pub fn p(input: TokenStream) -> TokenStream {
     element::expand_element("p", input)
 }
+
+#[proc_macro]
+pub fn a(input: TokenStream) -> TokenStream {
+    element::expand_element("a", input)
+}
+
+#[proc_macro]
+pub fn form(input: TokenStream) -> TokenStream {
+    element::expand_element("form", input)
+}
+
+#[proc_macro]
+pub fn input(input: TokenStream) -> TokenStream {
+    element::expand_element("input", input)
+}
