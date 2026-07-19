@@ -2,7 +2,6 @@ use proc_macro::TokenStream;
 
 mod component;
 mod element;
-mod helpers;
 mod query;
 mod routes;
 
@@ -24,4 +23,24 @@ pub fn routes(_args: TokenStream, input: TokenStream) -> TokenStream {
 #[proc_macro]
 pub fn fragment(input: TokenStream) -> TokenStream {
     element::expand_fragment(input)
+}
+
+#[proc_macro]
+pub fn div(input: TokenStream) -> TokenStream {
+    element::expand_element("div", input)
+}
+
+#[proc_macro]
+pub fn button(input: TokenStream) -> TokenStream {
+    element::expand_element("button", input)
+}
+
+#[proc_macro]
+pub fn span(input: TokenStream) -> TokenStream {
+    element::expand_element("span", input)
+}
+
+#[proc_macro]
+pub fn p(input: TokenStream) -> TokenStream {
+    element::expand_element("p", input)
 }

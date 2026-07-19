@@ -72,11 +72,17 @@ impl Display for HtmlNode<'_> {
 
 #[cfg(test)]
 mod tests {
-    use truss_macros::fragment;
+    use truss_macros::{div, fragment};
 
     #[test]
     fn test_fragment_with_text() {
         let result = fragment!("Hello World");
         assert_eq!(result.to_string(), "Hello World");
     }
-}
+
+    #[test]
+    fn test_div_with_text() {
+        let result = fragment!(div!("Hello World"));
+        assert_eq!(result.to_string(), "<div>Hello World</div>");
+    }
+}    
