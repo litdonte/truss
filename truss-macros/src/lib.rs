@@ -164,3 +164,37 @@ pub fn ol(input: TokenStream) -> TokenStream {
 pub fn li(input: TokenStream) -> TokenStream {
     element::expand_element("li", input)
 }
+#[proc_macro]
+pub fn header(input: TokenStream) -> TokenStream {
+    element::expand_element("header", input)
+}
+
+#[proc_macro]
+pub fn footer(input: TokenStream) -> TokenStream {
+    element::expand_element("footer", input)
+}
+
+#[proc_macro]
+pub fn main(input: TokenStream) -> TokenStream {
+    element::expand_element("main", input)
+}
+
+#[proc_macro]
+pub fn nav(input: TokenStream) -> TokenStream {
+    element::expand_element("nav", input)
+}
+
+#[proc_macro]
+pub fn section(input: TokenStream) -> TokenStream {
+    element::expand_element("section", input)
+}
+
+#[proc_macro]
+pub fn article(input: TokenStream) -> TokenStream {
+    element::expand_element("article", input)
+}
+
+#[proc_macro]
+pub fn aside(input: TokenStream) -> TokenStream {
+    element::expand_element("aside", input)
+}
