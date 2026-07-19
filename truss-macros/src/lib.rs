@@ -198,3 +198,18 @@ pub fn article(input: TokenStream) -> TokenStream {
 pub fn aside(input: TokenStream) -> TokenStream {
     element::expand_element("aside", input)
 }
+
+#[proc_macro]
+pub fn img(input: TokenStream) -> TokenStream {
+    element::expand_element("img", input)
+}
+
+#[proc_macro]
+pub fn video(input: TokenStream) -> TokenStream {
+    element::expand_element("video", input)
+}
+
+#[proc_macro]
+pub fn audio(input: TokenStream) -> TokenStream {
+    element::expand_element("audio", input)
+}
