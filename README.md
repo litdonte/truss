@@ -59,7 +59,7 @@ pub struct SceneOverview {
 
 impl SceneOverview {
     fn render(&self) -> Html {
-        html! {
+        fragment! {
             div! {
                 h1! { self.scene.title }
                 p! { self.scene.description }
@@ -79,11 +79,11 @@ impl ScenePanel {
     fn render(&self) -> Html {
         let params = &[SceneQuery::Character("Aerymis".into())];
 
-        html! {
+        fragment! {
             div! {
                 button! {
-                    Route::Scene(self.id).query(params)
-                    Target(self.overview)  // compile-time verified — not a CSS string
+                    HxGet(Route::Scene(self.id).query(params))
+                    HxTarget(self.overview)  // compile-time verified — not a CSS string
                     "Load Scene"
                 }
 
@@ -105,7 +105,7 @@ async fn get_scene(id: SceneId, db: Db) -> ScenePanel {
 }
 ```
 
-`Target(self.overview)` takes a component, not a string. If the target doesn't exist or the type is wrong, it doesn't compile.
+`HxTarget(self.overview)` takes a component, not a string. If the target doesn't exist or the type is wrong, it doesn't compile.
 
 ## Status
 
@@ -113,14 +113,15 @@ async fn get_scene(id: SceneId, db: Db) -> ScenePanel {
 | ----- | --------------------- | -------------- |
 | 1     | Core types and traits | ✅ Complete    |
 | 2     | Derive macros         | ✅ Complete    |
-| 3     | Element macros        | 🔄 In progress |
-| 4     | Query parameters      | 📋 Planned     |
-| 5     | Handler macro         | 📋 Planned     |
-| 6     | Polish and release    | 📋 Planned     |
+| 3     | Route macro           | ✅ Complete    |
+| 4     | Element macros        | ✅ Complete    |
+| 5     | Query parameters      | 🔄 In progress |
+| 6     | Handler macro         | 📋 Planned     |
+| 7     | Polish and release    | 📋 Planned     |
 
 ## Workspace
 
-- `truss-core` — core types, traits, and derive macros
+- `truss` — core types, traits, and HTML generation
 - `truss-macros` — procedural macros
 
 ## License
