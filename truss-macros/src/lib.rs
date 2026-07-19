@@ -59,3 +59,28 @@ pub fn form(input: TokenStream) -> TokenStream {
 pub fn input(input: TokenStream) -> TokenStream {
     element::expand_element("input", input)
 }
+
+#[proc_macro]
+pub fn head(input: TokenStream) -> TokenStream {
+    element::expand_element("head", input)
+}
+
+#[proc_macro]
+pub fn body(input: TokenStream) -> TokenStream {
+    element::expand_element("body", input)
+}
+
+#[proc_macro]
+pub fn title(input: TokenStream) -> TokenStream {
+    element::expand_element("title", input)
+}
+
+#[proc_macro]
+pub fn meta(input: TokenStream) -> TokenStream {
+    element::expand_element("meta", input)
+}
+
+#[proc_macro]
+pub fn link(input: TokenStream) -> TokenStream {
+    element::expand_element("link", input)
+}
