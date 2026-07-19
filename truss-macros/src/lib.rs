@@ -84,3 +84,33 @@ pub fn meta(input: TokenStream) -> TokenStream {
 pub fn link(input: TokenStream) -> TokenStream {
     element::expand_element("link", input)
 }
+
+#[proc_macro]
+pub fn h1(input: TokenStream) -> TokenStream {
+    element::expand_element("h1", input)
+}
+
+#[proc_macro]
+pub fn h2(input: TokenStream) -> TokenStream {
+    element::expand_element("h2", input)
+}
+
+#[proc_macro]
+pub fn h3(input: TokenStream) -> TokenStream {
+    element::expand_element("h3", input)
+}
+
+#[proc_macro]
+pub fn h4(input: TokenStream) -> TokenStream {
+    element::expand_element("h4", input)
+}
+
+#[proc_macro]
+pub fn h5(input: TokenStream) -> TokenStream {
+    element::expand_element("h5", input)
+}
+
+#[proc_macro]
+pub fn h6(input: TokenStream) -> TokenStream {
+    element::expand_element("h6", input)
+}
